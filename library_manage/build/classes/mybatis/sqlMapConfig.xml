@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 定义别名 -->
+	<typeAliases>
+	  <!-- 单个别名定义,alias:别名   typeAlias:别名映射的类型 -->
+	<!--   <typeAlias type="com.hulong.mybatis.entity.User" alias="user"/> -->
+	  <!-- 批量别名定义,指定包路径，自动扫描包下边的pojo，定义别名，别名默认为类名（首字母小写或大写） -->
+	   <package name="com.library.entity"/>
+	</typeAliases>
+	
+	<!-- 配置分页插件 -->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor" />
+	</plugins>
+	
+	<!-- 由于使用spring和mybatis整合的mapper扫描器,这里不用配置了 -->
+	<!-- <mappers>	  
+		<package name="com.hulong.ssm.mapper"/>		
+	</mappers> -->
+</configuration>

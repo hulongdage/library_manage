@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.library.mapper.ReaderMapper" >
+  <resultMap id="BaseResultMap" type="com.library.entity.Reader" >
+    <id column="readerid" property="readerid" jdbcType="INTEGER" />
+    <result column="readerkey" property="readerkey" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="typename" property="typename" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="CHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="CHAR" />
+    <result column="phone" property="phone" jdbcType="CHAR" />
+    <result column="dept" property="dept" jdbcType="VARCHAR" />
+    <result column="regdate" property="regdate" jdbcType="DATE" />
+    <result column="borrownum" property="borrownum" jdbcType="INTEGER" />
+    <result column="allborrownum" property="allborrownum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    readerid, readerkey, type, typename, name, birthday, age, sex, phone, dept, regdate, 
+    borrownum, allborrownum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.library.entity.ReaderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from reader
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from reader
+    where readerid = #{readerid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from reader
+    where readerid = #{readerid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.library.entity.ReaderExample" >
+    delete from reader
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.library.entity.Reader" >
+    insert into reader (readerid, readerkey, type, 
+      typename, name, birthday, 
+      age, sex, phone, dept, 
+      regdate, borrownum, allborrownum
+      )
+    values (#{readerid,jdbcType=INTEGER}, #{readerkey,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{typename,jdbcType=VARCHAR}, #{name,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, 
+      #{age,jdbcType=INTEGER}, #{sex,jdbcType=CHAR}, #{phone,jdbcType=CHAR}, #{dept,jdbcType=VARCHAR}, 
+      #{regdate,jdbcType=DATE}, #{borrownum,jdbcType=INTEGER}, #{allborrownum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.library.entity.Reader" >
+    insert into reader
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="readerid != null" >
+        readerid,
+      </if>
+      <if test="readerkey != null" >
+        readerkey,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="typename != null" >
+        typename,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="dept != null" >
+        dept,
+      </if>
+      <if test="regdate != null" >
+        regdate,
+      </if>
+      <if test="borrownum != null" >
+        borrownum,
+      </if>
+      <if test="allborrownum != null" >
+        allborrownum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="readerid != null" >
+        #{readerid,jdbcType=INTEGER},
+      </if>
+      <if test="readerkey != null" >
+        #{readerkey,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null" >
+        #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="dept != null" >
+        #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="regdate != null" >
+        #{regdate,jdbcType=DATE},
+      </if>
+      <if test="borrownum != null" >
+        #{borrownum,jdbcType=INTEGER},
+      </if>
+      <if test="allborrownum != null" >
+        #{allborrownum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.library.entity.ReaderExample" resultType="java.lang.Integer" >
+    select count(*) from reader
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update reader
+    <set >
+      <if test="record.readerid != null" >
+        readerid = #{record.readerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.readerkey != null" >
+        readerkey = #{record.readerkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.typename != null" >
+        typename = #{record.typename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=CHAR},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=CHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=CHAR},
+      </if>
+      <if test="record.dept != null" >
+        dept = #{record.dept,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regdate != null" >
+        regdate = #{record.regdate,jdbcType=DATE},
+      </if>
+      <if test="record.borrownum != null" >
+        borrownum = #{record.borrownum,jdbcType=INTEGER},
+      </if>
+      <if test="record.allborrownum != null" >
+        allborrownum = #{record.allborrownum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update reader
+    set readerid = #{record.readerid,jdbcType=INTEGER},
+      readerkey = #{record.readerkey,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      typename = #{record.typename,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=CHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      age = #{record.age,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=CHAR},
+      phone = #{record.phone,jdbcType=CHAR},
+      dept = #{record.dept,jdbcType=VARCHAR},
+      regdate = #{record.regdate,jdbcType=DATE},
+      borrownum = #{record.borrownum,jdbcType=INTEGER},
+      allborrownum = #{record.allborrownum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.library.entity.Reader" >
+    update reader
+    <set >
+      <if test="readerkey != null" >
+        readerkey = #{readerkey,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null" >
+        typename = #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="dept != null" >
+        dept = #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="regdate != null" >
+        regdate = #{regdate,jdbcType=DATE},
+      </if>
+      <if test="borrownum != null" >
+        borrownum = #{borrownum,jdbcType=INTEGER},
+      </if>
+      <if test="allborrownum != null" >
+        allborrownum = #{allborrownum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where readerid = #{readerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.library.entity.Reader" >
+    update reader
+    set readerkey = #{readerkey,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      typename = #{typename,jdbcType=VARCHAR},
+      name = #{name,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      age = #{age,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=CHAR},
+      phone = #{phone,jdbcType=CHAR},
+      dept = #{dept,jdbcType=VARCHAR},
+      regdate = #{regdate,jdbcType=DATE},
+      borrownum = #{borrownum,jdbcType=INTEGER},
+      allborrownum = #{allborrownum,jdbcType=INTEGER}
+    where readerid = #{readerid,jdbcType=INTEGER}
+  </update>
+</mapper>

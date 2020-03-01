@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- 设置页面不登陆也可以访问 -->
+	<http pattern="/index.jsp" security="none"></http>
+	<http pattern="/lib/**" security="none"></http>
+	<http pattern="/css/**" security="none"></http>
+	<http pattern="/js/**" security="none"></http>
+	<http pattern="/images/**" security="none"></http>
+	<http pattern="/assets/**" security="none"></http>
+	<http pattern="/font/**" security="none"></http>
+	<http pattern="/fonts/**" security="none"></http>
+	<!-- 页面拦截规则   use-expressions:是否启动SPEL表达式,默认是true -->
+	<http use-expressions="false">
+	   <!-- 当前用户必须有特定的角色才可以访问根目录以及子目录的资源,这里我设置了三种角色，每一种角色有访问对应文件夹页面的权限 -->
+		<intercept-url pattern="/web/admin/**" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/web/user/**" access="ROLE_USER" />
+	   <!-- 开启表单登陆功能 -->
+	   <!--注意必须要认证成功过后，即匹配数据库用户名+密码成功后，才会调用自定义的 successHandler-，否则通过failure-url还是跳转到登录页面-->
+	   <form-login login-page="/index.jsp" 
+				   authentication-success-handler-ref="successHandler"
+				   authentication-failure-url="/index.jsp?error=true"/>
+		<access-denied-handler ref="accessDeniedServletHandler"/>
+		<headers>
+		    <frame-options policy="SAMEORIGIN"/>
+		</headers>
+	   <csrf disabled="true"/>	   
+	   <logout/>
+	</http>
+	
+	<!-- 认证管理器 -->
+	<authentication-manager>
+	    <authentication-provider user-service-ref="userSecurity">
+	       <password-encoder ref="bcryptEncoder"></password-encoder>
+	    </authentication-provider>
+	</authentication-manager>
+	
+	<beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	</beans:bean>
+	
+	<!-- 认证类 -->
+	 <beans:bean id="successHandler" class="com.library.security.SuccessHandler"> 
+    </beans:bean>
+ 
+    <beans:bean id="userSecurity"  class="com.library.security.UserSecurity">
+    </beans:bean>
+    
+    <beans:bean id="accessDeniedServletHandler" class="com.library.security.AccessDeniedServletHandler" scope="singleton"></beans:bean>
+    
+</beans:beans>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.library.mapper.BorrowbookMapper" >
+  <resultMap id="BaseResultMap" type="com.library.entity.Borrowbook" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="readerkey" property="readerkey" jdbcType="VARCHAR" />
+    <result column="ISBN" property="isbn" jdbcType="CHAR" />
+    <result column="booktypeid" property="booktypeid" jdbcType="INTEGER" />
+    <result column="borrowdate" property="borrowdate" jdbcType="DATE" />
+    <result column="realreturndate" property="realreturndate" jdbcType="DATE" />
+    <result column="returndate" property="returndate" jdbcType="DATE" />
+    <result column="fine" property="fine" jdbcType="DECIMAL" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, readerkey, ISBN, booktypeid, borrowdate, realreturndate, returndate, fine, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.library.entity.BorrowbookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from borrowbook
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from borrowbook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from borrowbook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.library.entity.BorrowbookExample" >
+    delete from borrowbook
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.library.entity.Borrowbook" >
+    insert into borrowbook (id, readerkey, ISBN, 
+      booktypeid, borrowdate, realreturndate, 
+      returndate, fine, state
+      )
+    values (#{id,jdbcType=INTEGER}, #{readerkey,jdbcType=VARCHAR}, #{isbn,jdbcType=CHAR}, 
+      #{booktypeid,jdbcType=INTEGER}, #{borrowdate,jdbcType=DATE}, #{realreturndate,jdbcType=DATE}, 
+      #{returndate,jdbcType=DATE}, #{fine,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.library.entity.Borrowbook" >
+    insert into borrowbook
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="readerkey != null" >
+        readerkey,
+      </if>
+      <if test="isbn != null" >
+        ISBN,
+      </if>
+      <if test="booktypeid != null" >
+        booktypeid,
+      </if>
+      <if test="borrowdate != null" >
+        borrowdate,
+      </if>
+      <if test="realreturndate != null" >
+        realreturndate,
+      </if>
+      <if test="returndate != null" >
+        returndate,
+      </if>
+      <if test="fine != null" >
+        fine,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="readerkey != null" >
+        #{readerkey,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null" >
+        #{isbn,jdbcType=CHAR},
+      </if>
+      <if test="booktypeid != null" >
+        #{booktypeid,jdbcType=INTEGER},
+      </if>
+      <if test="borrowdate != null" >
+        #{borrowdate,jdbcType=DATE},
+      </if>
+      <if test="realreturndate != null" >
+        #{realreturndate,jdbcType=DATE},
+      </if>
+      <if test="returndate != null" >
+        #{returndate,jdbcType=DATE},
+      </if>
+      <if test="fine != null" >
+        #{fine,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.library.entity.BorrowbookExample" resultType="java.lang.Integer" >
+    select count(*) from borrowbook
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update borrowbook
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.readerkey != null" >
+        readerkey = #{record.readerkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isbn != null" >
+        ISBN = #{record.isbn,jdbcType=CHAR},
+      </if>
+      <if test="record.booktypeid != null" >
+        booktypeid = #{record.booktypeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.borrowdate != null" >
+        borrowdate = #{record.borrowdate,jdbcType=DATE},
+      </if>
+      <if test="record.realreturndate != null" >
+        realreturndate = #{record.realreturndate,jdbcType=DATE},
+      </if>
+      <if test="record.returndate != null" >
+        returndate = #{record.returndate,jdbcType=DATE},
+      </if>
+      <if test="record.fine != null" >
+        fine = #{record.fine,jdbcType=DECIMAL},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update borrowbook
+    set id = #{record.id,jdbcType=INTEGER},
+      readerkey = #{record.readerkey,jdbcType=VARCHAR},
+      ISBN = #{record.isbn,jdbcType=CHAR},
+      booktypeid = #{record.booktypeid,jdbcType=INTEGER},
+      borrowdate = #{record.borrowdate,jdbcType=DATE},
+      realreturndate = #{record.realreturndate,jdbcType=DATE},
+      returndate = #{record.returndate,jdbcType=DATE},
+      fine = #{record.fine,jdbcType=DECIMAL},
+      state = #{record.state,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.library.entity.Borrowbook" >
+    update borrowbook
+    <set >
+      <if test="readerkey != null" >
+        readerkey = #{readerkey,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null" >
+        ISBN = #{isbn,jdbcType=CHAR},
+      </if>
+      <if test="booktypeid != null" >
+        booktypeid = #{booktypeid,jdbcType=INTEGER},
+      </if>
+      <if test="borrowdate != null" >
+        borrowdate = #{borrowdate,jdbcType=DATE},
+      </if>
+      <if test="realreturndate != null" >
+        realreturndate = #{realreturndate,jdbcType=DATE},
+      </if>
+      <if test="returndate != null" >
+        returndate = #{returndate,jdbcType=DATE},
+      </if>
+      <if test="fine != null" >
+        fine = #{fine,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.library.entity.Borrowbook" >
+    update borrowbook
+    set readerkey = #{readerkey,jdbcType=VARCHAR},
+      ISBN = #{isbn,jdbcType=CHAR},
+      booktypeid = #{booktypeid,jdbcType=INTEGER},
+      borrowdate = #{borrowdate,jdbcType=DATE},
+      realreturndate = #{realreturndate,jdbcType=DATE},
+      returndate = #{returndate,jdbcType=DATE},
+      fine = #{fine,jdbcType=DECIMAL},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
